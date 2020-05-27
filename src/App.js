@@ -31,6 +31,7 @@ function App() {
 
     return unsubscribe;
   }, []);
+
   return (
     <div>
       <Header currentUser={currentUser} />

@@ -26,7 +26,6 @@ const SignUp = () => {
 
     try {
       const { user } = await auth.createUserWithEmailAndPassword(email, password);
-      // console.log(displayName);
       await createUserDocument(user, { displayName });
 
       setUserInput({
