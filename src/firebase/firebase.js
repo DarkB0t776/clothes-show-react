@@ -24,7 +24,8 @@ export const createUserDocument = async (userAuth, additionalData) => {
     const createdAt = new Date();
     try {
       await userRef.set({
-        displayName, email,
+        displayName,
+        email,
         createdAt,
         ...additionalData
       });
