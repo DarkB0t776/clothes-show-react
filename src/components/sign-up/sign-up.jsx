@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 
 import FormInput from '../form-input/form-input';
 import CustomButton from '../custom-button/custom-button';
@@ -39,7 +39,7 @@ const SignUp = () => {
     }
   }
 
-  const changeHandler = useCallback(event => {
+  const changeHandler = event => {
     const { name, value } = event.target;
 
     setUserInput(prevState => ({
@@ -47,7 +47,7 @@ const SignUp = () => {
       [name]: value
     }))
 
-  }, [userInput]);
+  };
 
 
   return (
