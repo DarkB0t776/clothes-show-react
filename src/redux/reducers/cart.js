@@ -1,9 +1,11 @@
 import {
   TOGGLE_CART,
-  ADD_ITEM_TO_CART
+  ADD_ITEM_TO_CART,
+  DELETE_ITEM_FROM_CART,
+  REMOVE_ITEM
 } from '../types'
 
-import { addItemToCart } from '../utils/cartUtils';
+import { addItemToCart, removeItemFromCart } from '../utils/cartUtils';
 
 
 const INITIAL_STATE = {
@@ -23,6 +25,16 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.item)
       };
+    case REMOVE_ITEM:
+      return {
+        ...state,
+        cartItems: removeItemFromCart(state.cartItems, action.item)
+      }
+    case DELETE_ITEM_FROM_CART:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(item => item.id !== action.id)
+      }
     default:
       return state;
   }
