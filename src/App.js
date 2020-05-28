@@ -6,9 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as userActions from './redux/actions/user';
 
 import './App.css';
+
 import HomePage from './pages/homepage/homepage';
 import ShopPage from "./pages/shop/shop";
 import AuthenticationPage from './pages/authentication/authentication';
+import CheckoutPage from './pages/checkout/checkout';
+
 import Header from './components/header/header';
 
 
@@ -42,6 +45,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/shop" component={ShopPage} />
+        <Route exact path="/checkout" component={CheckoutPage} />
         <Route
           exact
           path="/authentication"
