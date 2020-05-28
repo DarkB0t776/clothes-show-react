@@ -5,10 +5,13 @@ import { useSelector } from "react-redux";
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.scss';
+import CartIcon from '../cart-icon/cart-icon';
+import CartDropdown from '../cart-dropdown/cart-dropdown';
 
 const Header = () => {
 
   const currentUser = useSelector(state => state.user.currentUser);
+  const isCartHidden = useSelector(state => state.cart.hidden);
 
   return (
     <div className="header">
@@ -35,7 +38,11 @@ const Header = () => {
               SIGN IN
           </Link>
         }
+        <CartIcon />
       </div>
+      {
+        isCartHidden ? null : <CartDropdown />
+      }
     </div>
   );
 }

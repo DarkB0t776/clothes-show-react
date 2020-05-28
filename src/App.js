@@ -12,8 +12,7 @@ import AuthenticationPage from './pages/authentication/authentication';
 import Header from './components/header/header';
 
 
-function App() {
-
+const App = () => {
 
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.user.currentUser);
