@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './checkout.scss';
 
-import CheckoutItem from '../../components/checkout-item/checkout-item'
+import CheckoutItem from '../../components/checkout-item/checkout-item';
+import StripeButton from '../../components/stripe-button/stripe-button';
+
 
 const CheckoutPage = () => {
 
@@ -38,6 +40,12 @@ const CheckoutPage = () => {
       }
       <div className="total">
         <span>TOTAL: ${cartTotal}</span>
+      </div>
+      <StripeButton price={cartTotal} />
+      <div class="test-warning">
+        Use test credit card for payments
+        <br />
+        Card Number: 4242 4242 4242 4242
       </div>
     </div>
   );
