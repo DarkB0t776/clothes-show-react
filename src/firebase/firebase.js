@@ -13,6 +13,8 @@ const config = {
   measurementId: "G-PQSX75EC1E"
 };
 
+firebase.initializeApp(config);
+
 export const createUserDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -34,11 +36,35 @@ export const createUserDocument = async (userAuth, additionalData) => {
     }
   }
 
+
   return userRef;
 
 };
 
-firebase.initializeApp(config);
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = firestore.collection(collectionKey);
+
+  const batch = firestore.batch();
+
+  for (const property in objectsToAdd) {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, objectsToAdd[property]);
+  }
+
+  return await batch.commit();
+};
+
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map(doc => {
+    return {
+      ...doc.data()
+    }
+  });
+  return transformedCollection.reduce((accum, collection) => {
+    accum[collection.title.toLowerCase()] = collection;
+    return accum;
+  }, {});
+};
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
