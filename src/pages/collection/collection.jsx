@@ -14,7 +14,10 @@ const CollectionPage = ({ match }) => {
     return state.collections.collections[collectionUrlParam];
   });
 
+
+
   const { title, items } = collection;
+
 
   return (
     <div className="collection-page">

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { auth, createUserDocument } from './firebase/firebase';
+import {auth, convertCollectionsSnapshotToMap, createUserDocument, firestore} from './firebase/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as userActions from './redux/actions/user';
+import * as collectionActions from './redux/actions/collection';
 
 import './App.css';
 
@@ -15,13 +16,14 @@ import CheckoutPage from './pages/checkout/checkout';
 import Header from './components/header/header';
 
 
+
 const App = () => {
 
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.user.currentUser);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async userAuth => {
+    const unsubscribeAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserDocument(userAuth);
         userRef.onSnapshot(snapShot => {
@@ -36,7 +38,17 @@ const App = () => {
       }
     });
 
-    return unsubscribe;
+    const collectionRef = firestore.collection('collections');
+    const unsubscribeCollections = collectionRef.onSnapshot(async snapshot => {
+      console.log(snapshot);
+      const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+      dispatch(collectionActions.updateCollections(collectionsMap));
+    });
+
+    return () => {
+      unsubscribeAuth();
+      unsubscribeCollections();
+    };
   }, [dispatch]);
 
   return (
@@ -54,6 +66,6 @@ const App = () => {
       </Switch>
     </div>
   );
-}
+};
 
 export default App;
